@@ -1,10 +1,9 @@
-from request import RequestData
-
+from twisted.internet import reactor
 from twisted.web import server
 from twisted.web.resource import Resource
-from twisted.internet import reactor
-from interactions import Interaction, PingInteraction
-from command import InteractionCommand, CommandOption, CommandOptionType
+
+from .interactions import Interaction, PingInteraction
+from .request import RequestData
 
 
 def test_command_callback(_):
@@ -19,21 +18,6 @@ class InteractionClient(Resource):
         self.commands = {}
         self.ping_message = PingInteraction()
         self.site = server.Site(self)
-        test_command = InteractionCommand(
-            name="test", 
-            description="test command",
-            id=0,
-            application_id=0,
-            options=[
-                CommandOption(
-                    type=CommandOptionType.STRING, 
-                    name="test_val", 
-                    description="Testing Value",
-                    required=False
-                )
-            ]
-        )
-        self.register_command(test_command, test_command_callback)
         
     def start_site(self):
         reactor.listenTCP(8080, self.site)
@@ -58,8 +42,3 @@ class InteractionClient(Resource):
     
     def register_command(self, command, callback):
         self.commands[command.name] = (command.name, callback, command)
-
-
-if __name__ == "__main__":
-    resource = InteractionClient()
-    resource.start_site()

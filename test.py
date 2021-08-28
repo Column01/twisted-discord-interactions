@@ -1,22 +1,9 @@
-# twisted-discord-interactions
-
-A Twisted-based Python discord interactions platform
-
-Heavily inspired by: https://github.com/LiBa001/discord-interactions.py
-
-## Installation
-
-WIP
-
-## Usage
-
-```python
-import typing
 from twisted_discord_interactions.client import InteractionClient
 from twisted_discord_interactions.request import RequestData
 from twisted_discord_interactions.command import InteractionCommand, CommandOption, CommandOptionType
 
 def my_command_callback(request_data: RequestData):
+    print(request_data.__dict__)
     return b"Text response to interaction"
 
 
@@ -38,4 +25,3 @@ if __name__ == "__main__":
     )
     client.register_command(test_command, my_command_callback)
     client.start_site()
-```

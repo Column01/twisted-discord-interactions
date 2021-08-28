@@ -1,5 +1,6 @@
 import json
-from command import InteractionCommand
+
+from .command import InteractionCommand
 
 
 class Interaction:
