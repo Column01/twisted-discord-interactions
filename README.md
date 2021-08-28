@@ -1,8 +1,8 @@
 # twisted-discord-interactions
 
-A Twisted-based Python discord interactions platform
+A Twisted-based Python discord interactions web server implementation
 
-Heavily inspired by: https://github.com/LiBa001/discord-interactions.py
+Heavily inspired by the existing [discord-interactions.py](https://github.com/LiBa001/discord-interactions.py) project
 
 ## Installation
 
