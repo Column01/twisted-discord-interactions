@@ -11,10 +11,7 @@ WIP
 ## Example Usage
 
 ```python
-import typing
-from twisted_discord_interactions.client import InteractionClient
-from twisted_discord_interactions.request import RequestData
-from twisted_discord_interactions.command import InteractionCommand, CommandOption, CommandOptionType
+from twisted_discord_interactions import RequestData, InteractionClient, InteractionCommand, CommandOption, CommandOptionType
 
 def my_command_callback(request_data: RequestData):
     do_something = True
