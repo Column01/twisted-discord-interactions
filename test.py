@@ -8,7 +8,8 @@ def my_command_callback(request_data: RequestData):
 
 
 if __name__ == "__main__":
-    client = InteractionClient()
+    pub_key = open("key.txt", "r").read().strip("\n")
+    client = InteractionClient(pub_key)
     test_command = InteractionCommand(
         name="test", 
         description="test command",

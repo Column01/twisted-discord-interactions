@@ -1,6 +1,8 @@
 from twisted.internet import reactor
 from twisted.web import server
 from twisted.web.resource import Resource
+from nacl.signing import VerifyKey
+from nacl.exceptions import BadSignatureError
 
 from .interactions import Interaction, PingInteraction
 from .request import RequestData
@@ -13,11 +15,12 @@ def test_command_callback(_):
 class InteractionClient(Resource):
     isLeaf = True
     
-    def __init__(self):
+    def __init__(self, public_key):
         self.pages = {}
         self.commands = {}
         self.ping_message = PingInteraction()
         self.site = server.Site(self)
+        self.verify_key = VerifyKey(bytes.fromhex(public_key))
         
     def start_site(self):
         reactor.listenTCP(8080, self.site)
@@ -29,6 +32,17 @@ class InteractionClient(Resource):
     
     def render_POST(self, request):
         """ Handles post requests to the server """
+        
+        # Validate the request
+        signature = request.requestHeaders.getRawHeaders("X-Signature-Ed25519")[0]
+        timestamp = request.requestHeaders.getRawHeaders("X-Signature-Timestamp")[0]
+        try:
+            msg_obj = "{}{}".format(timestamp, request.content.read().decode("utf-8"))
+            self.verify_key.verify(msg_obj.encode(), bytes.fromhex(signature))
+        except BadSignatureError:
+            request.setResponseCode(401)
+            return b"invalid request signature"
+
         # Parse the request data into an easy to use object
         request_data = RequestData(request)
         # It's a ping post request, reply to it.

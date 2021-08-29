@@ -3,6 +3,8 @@ import json
 
 class RequestData:
     def __init__(self, request):
+        # Make sure the request content is at the start
+        request.content.seek(0)
         content = request.content.read().decode("utf-8")
         try:
             json_data = json.loads(content)
