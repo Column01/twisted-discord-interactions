@@ -1,5 +1,7 @@
 # twisted-discord-interactions
 
+**__WARNING__** Still a major work in progress! Not fully functional
+
 A Twisted-based Python discord interactions web server implementation
 
 Heavily inspired by the existing [discord-interactions.py](https://github.com/LiBa001/discord-interactions.py) project
