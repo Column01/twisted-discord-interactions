@@ -8,7 +8,7 @@ Heavily inspired by the existing [discord-interactions.py](https://github.com/Li
 
 WIP
 
-## Usage
+## Example Usage
 
 ```python
 import typing
@@ -17,11 +17,13 @@ from twisted_discord_interactions.request import RequestData
 from twisted_discord_interactions.command import InteractionCommand, CommandOption, CommandOptionType
 
 def my_command_callback(request_data: RequestData):
+    do_something = True
     return b"Text response to interaction"
 
 
 if __name__ == "__main__":
-    client = InteractionClient()
+    pub_key = open("key.txt", "r").read().strip("\n")
+    client = InteractionClient(pub_key)
     test_command = InteractionCommand(
         name="test", 
         description="test command",
